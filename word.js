@@ -1,24 +1,23 @@
 const Letter = require('./letter')
 
-const func = new Letter
+const func = new Letter()
 
-const Word = function(wordToGuess) {
-    this.wordToGuess = wordToGuess
+const Word = function(word) {
+    this.wordSplitToArr = []
+    this.wordCheck = function(word) {
+        for (let i = 0; i < word.length; i++) {
+            let character = func.characterCheck(word[i])
+            this.wordSplitToArr.push(character)
+        }
+    }
     this.displayWord = function() {
         // call function on each letter object
         // func.characterReturn
         // concatenate together
         // return string representation of word
-    }
-    this.wordCheck = function(character) {
-        // characterCheck
-        for (let i = 0; i < wordToGuess.length; i++) {
-            func.characterCheck(wordToGuess[i])
-            func.characterReturn();
-        }
+        console.log(this.wordSplitToArr)
     }
 }
 
-const word = new Word('Mike')
-word.wordCheck();
-
+const newWord = new Word('Mike')
+newWord.displayWord()

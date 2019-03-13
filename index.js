@@ -3,9 +3,15 @@ const word = require('./word')
 const inquirer = require('inquirer')
 const chalk = require('chalk')
 
+const func = new Word
+
+const algo = new Word('algorithm')
+
+let remainingGuesses;
 const wordsComputerScience = ['Algorithm', 'Data Structures', 'Framework', 'Object Oriented Programming']
 const wordsForeignLanguages = ['Polish', 'Hungarian', 'Mandarin', 'Icelandic']
 const wordsMovies = ['The Green Mile', 'Good Will Hunting', 'Shawshank Redemption', 'V for Vendetta']
+
 
 /*
 function randomizeWord(arr) {
@@ -13,7 +19,6 @@ function randomizeWord(arr) {
     let randomWord = words[randomNum]
     let newWord = new Word
 }
-*/
 
 inquirer
 .prompt([
@@ -24,5 +29,6 @@ inquirer
         choices: ['Computer Science', 'Foreign Languages', 'Movies']
     }
 ]).then(function(answers) {
-
+    
 })
+   */

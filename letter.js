@@ -1,6 +1,12 @@
 const Letter = function(character) {
     this.character = character
     this.hasBeenGuessed = false
+    this.guessCheck = function(guessedLetter) {
+        if (guessedLetter === this.character) {
+            this.hasBeenGuessed = true
+        }
+        this.characterReturn()
+    }
     this.characterReturn = function() {
         if (this.hasBeenGuessed) {
             console.log(this.character)
@@ -8,10 +14,6 @@ const Letter = function(character) {
             console.log('_')
         }
     }
-    this.characterCheck = function(guessedLetter) {
-        if (this.guessedLetter === this.character) {
-            this.hasBeenGuessed = true
-        }
-    }
 }
+
 module.exports = Letter
