@@ -1,19 +1,21 @@
-const Letter = function(character) {
-    this.character = character
+const Letter = function(letter) {
+    this.letter = letter
     this.hasBeenGuessed = false
-    this.guessCheck = function(guessedLetter) {
-        if (guessedLetter === this.character) {
-            this.hasBeenGuessed = true
+    this.checkGuess = function(guessedLetter) { 
+        if (guessedLetter === this.letter) {
+            this.hasBeenGuessed = true;
+            console.log({letter: this.letter, guessed: this.hasBeenGuessed});
+        } else {
+            console.log({letter: this.letter, guessed: this.hasBeenGuessed});
         }
-        this.characterReturn()
+
     }
-    this.characterReturn = function() {
+    this.returnCharacter = function() {
         if (this.hasBeenGuessed) {
-            console.log(this.character)
+            console.log(this.letter)
         } else {
             console.log('_')
         }
     }
 }
-
 module.exports = Letter
