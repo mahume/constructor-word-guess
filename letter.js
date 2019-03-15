@@ -7,7 +7,9 @@ const Letter = function(letter) {
         }
     }
     this.returnCharacter = function() {
-        if (this.hasBeenGuessed) {
+        if (this.letter === ' ') {
+            return ' '
+        } else if (this.hasBeenGuessed) {
             return this.letter
         } else {
             return '_'

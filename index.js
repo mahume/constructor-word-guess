@@ -2,7 +2,7 @@ const Word = require('./word')
 const inquirer = require('inquirer')
 const chalk = require('chalk')
 
-const algo = new Word('my algorithm')
+const algo = new Word('Foo Bar')
 algo.checkLetter('o')
 algo.displayWord()
 
