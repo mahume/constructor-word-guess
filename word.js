@@ -13,18 +13,12 @@ const Word = function(word) {
         }
     }
     this.displayWord = function() {
-        // call function on each letter object
         let arrToStr = []
         for (let i = 0; i < this.newLetterArr.length; i++) {
             arrToStr.push(this.newLetterArr[i].returnCharacter())
         }
         console.log(arrToStr.join(' '))
-        // func.characterReturn
-        // concatenate together
-        // return string representation of word
     }
 }
 
-const newWord = new Word('Mike')
-newWord.checkLetter('i')
-newWord.displayWord()
+module.exports = Word
