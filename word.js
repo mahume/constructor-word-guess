@@ -9,16 +9,16 @@ const Word = function(word) {
     }
     this.checkLetter = function(guess) {
         for (let i = 0; i < this.newLetterArr.length; i++) {
-            console.log(this.newLetterArr[i].checkGuess(guess))
+            this.newLetterArr[i].checkGuess(guess)
         }
     }
     this.displayWord = function() {
         // call function on each letter object
-        let str = ''
+        let arrToStr = []
         for (let i = 0; i < this.newLetterArr.length; i++) {
-            str += this.newLetterArr[i].returnCharacter()
+            arrToStr.push(this.newLetterArr[i].returnCharacter())
         }
-        console.log(str)
+        console.log(arrToStr.join(' '))
         // func.characterReturn
         // concatenate together
         // return string representation of word
