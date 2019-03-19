@@ -3,12 +3,13 @@ const inquirer = require('inquirer')
 const chalk = require('chalk')
 
 let remainingGuesses = 10
-const wordsComputerScience = ['Algorithm', 'Data Structures', 'Framework', 'Object Oriented Programming']
-const wordsForeignLanguages = ['Polish', 'Hungarian', 'Mandarin', 'Icelandic']
-const wordsMovies = ['The Green Mile', 'Good Will Hunting', 'Shawshank Redemption', 'V for Vendetta']
 
 selectTopicPrompt()
 function selectTopicPrompt() {
+    const wordsComputerScience = ['Algorithm', 'Data Structures', 'Framework', 'Object Oriented Programming']
+    const wordsForeignLanguages = ['Polish', 'Hungarian', 'Mandarin', 'Icelandic']
+    const wordsMovies = ['The Green Mile', 'Good Will Hunting', 'Shawshank Redemption', 'V for Vendetta']    
+    
     inquirer
     .prompt([
         {
@@ -21,27 +22,29 @@ function selectTopicPrompt() {
     ]).then(answers => {
         switch (answers.topic) {
             case 'Computer Science':
-                randomizeWord(wordsComputerScience)
+                pickRandomWord(wordsComputerScience)
                 break;
             case 'Foreign Languages':
-                randomizeWord(wordsForeignLanguages)
+                pickRandomWord(wordsForeignLanguages)
                 break;
             case 'Movies':
-                randomizeWord(wordsMovies)
+                pickRandomWord(wordsMovies)
                 break; 
             default:
                 break;
         }
     })
 }
-function randomizeWord(arr) {
+function pickRandomWord(arr) {
     let randomNum = Math.floor(Math.random() * arr.length)
     let randomWord = arr[randomNum]
     let newWord = new Word(randomWord)
-    newWord.displayWord()
-    guessWord(newWord)
+    guessLetterPrompt(newWord)
 }
-function guessWord(newWord) {
+function guessLetterPrompt(newWord) {
+    const wordToGuess = newWord.wordToArr
+    newWord.displayWord()
+
     inquirer
     .prompt([
         {
@@ -50,18 +53,43 @@ function guessWord(newWord) {
             message: 'Guess a letter!'
         }
     ]).then(answers => {
-        console.log(newWord)
-        
-        /*
-        if () {
-            newWord.displayWord()
+        newWord.checkLetter(answers.guess)
+        console.log(wordToGuess)
+
+        if (wordToGuess.includes(answers.guess)) {
+            for (let i = 0; i < wordToGuess.length; i++) {
+                if (answers.guess === wordToGuess[i].toLowerCase()) {
+                    wordToGuess.splice([i], 1);
+                }
+            }
             console.log(`Correct! Keep guessing.`)
+            guessLetterPrompt(newWord)
         } else {
-            newWord.displayWord()
             console.log(`Sorry! Wrong letter. Keep guessing.`)
             remainingGuesses--
             console.log(`Guesses Remaining: ${remainingGuesses}`)
+            guessLetterPrompt(newWord)
         }
-        */
+        if (remainingGuesses <= 0) {
+            console.log(`Sorry, Game over`)
+            playAgain()
+        }
+    })
+}
+function playAgain() {
+    inquirer
+    .prompt([
+        {
+            type: 'confirm',
+            name: 'playAgain',
+            message: 'Would you like to continue playing?'
+        }
+    ]).then(answers => {
+        if (answers.playAgain) {
+            selectTopicPrompt()
+        } else {
+            console.log('Goodbye')
+            process.exit()
+        }
     })
 }
