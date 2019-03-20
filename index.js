@@ -35,14 +35,17 @@ function selectTopicPrompt() {
         }
     })
 }
+
 function pickRandomWord(arr) {
     let randomNum = Math.floor(Math.random() * arr.length)
     let randomWord = arr[randomNum]
     let newWord = new Word(randomWord)
     guessLetterPrompt(newWord)
 }
+
 function guessLetterPrompt(newWord) {
-    const wordToGuess = newWord.wordToArr
+    const wordToGuess = newWord.wordToArr.map(letter => letter.toLowerCase())
+    console.log(wordToGuess)
     newWord.displayWord()
 
     inquirer
@@ -54,15 +57,15 @@ function guessLetterPrompt(newWord) {
         }
     ]).then(answers => {
         newWord.checkLetter(answers.guess)
-        console.log(wordToGuess)
 
         if (wordToGuess.includes(answers.guess)) {
             for (let i = 0; i < wordToGuess.length; i++) {
-                if (answers.guess === wordToGuess[i].toLowerCase()) {
+                if (answers.guess === wordToGuess[i]) {
                     wordToGuess.splice([i], 1);
                 }
             }
             console.log(`Correct! Keep guessing.`)
+            console.log('===============================')
             guessLetterPrompt(newWord)
         } else {
             console.log(`Sorry! Wrong letter. Keep guessing.`)
@@ -76,6 +79,7 @@ function guessLetterPrompt(newWord) {
         }
     })
 }
+
 function playAgain() {
     inquirer
     .prompt([
