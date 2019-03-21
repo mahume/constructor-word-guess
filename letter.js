@@ -1,8 +1,10 @@
+const chalk = require('chalk')
+
 const Letter = function(letter) {
     this.letter = letter
     this.hasBeenGuessed = false
     this.checkGuess = function(guess) { 
-        if (guess === this.letter) {
+        if (guess === this.letter.toLowerCase()) {
             this.hasBeenGuessed = true
         }
     }
@@ -10,9 +12,9 @@ const Letter = function(letter) {
         if (this.letter === ' ') {
             return ' '
         } else if (this.hasBeenGuessed) {
-            return this.letter
+            return chalk.bold.white(this.letter)
         } else {
-            return '_'
+            return chalk.blue.bold('_')
         }
     }
 }
