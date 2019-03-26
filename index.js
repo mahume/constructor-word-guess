@@ -1,17 +1,17 @@
 const Word = require('./word')
+
 const inquirer = require('inquirer')
 const chalk = require('chalk')
 
-let remainingGuesses = 10
+let remainingGuesses = 9
 let wordToGuess, newWord
 let lettersGuessed = []
+const wordsComputerScience = ['Algorithm', 'Data Structures', 'Framework', 'Object Oriented Programming']
+const wordsForeignLanguages = ['Polish', 'Hungarian', 'Mandarin', 'Icelandic']
+const wordsMovies = ['The Green Mile', 'Good Will Hunting', 'Shawshank Redemption', 'V for Vendetta']    
 
 selectTopicPrompt()
 function selectTopicPrompt() {
-    const wordsComputerScience = ['Algorithm', 'Data Structures', 'Framework', 'Object Oriented Programming']
-    const wordsForeignLanguages = ['Polish', 'Hungarian', 'Mandarin', 'Icelandic']
-    const wordsMovies = ['The Green Mile', 'Good Will Hunting', 'Shawshank Redemption', 'V for Vendetta']    
-    
     inquirer
     .prompt([
         {
@@ -37,23 +37,26 @@ function selectTopicPrompt() {
         }
     })
 }
-
 function pickRandomWord(arr) {
     const randomNum = Math.floor(Math.random() * arr.length)
     const randomWord = arr[randomNum]
     newWord = new Word(randomWord)
     wordToGuess = newWord.wordToArr.map(letter => letter.toLowerCase())
-    guessLetterPrompt(newWord)
+    guessSetup(newWord)
 }
-
-function guessLetterPrompt(newWord) {
+function guessSetup(newWord) {
     console.log('')
     newWord.displayWord()
-    console.log(wordToGuess)
-
-    checkIfWon()
     removeSpaces()
+    
+    if (checkIfWon() || checkIfLost()) {
+        playAgain()
+        return
+    } 
 
+    guessLetterPrompt(newWord)
+}
+function guessLetterPrompt(newWord) {
     inquirer
     .prompt([
         {
@@ -62,31 +65,30 @@ function guessLetterPrompt(newWord) {
             message: 'Guess a letter!'
         }
     ]).then(answers => {
-        alreadyGuessed(answers.guess)
-        newWord.checkLetter(answers.guess)
+        const guess = answers.guess.toLowerCase()
+        alreadyGuessed(guess)
+        newWord.checkLetter(guess)
 
-        if (wordToGuess.includes(answers.guess)) {
+        if (wordToGuess.includes(guess)) {
             for (let i = 0; i < wordToGuess.length; i++) {
-                if (answers.guess === wordToGuess[i]) {
+                if (guess === wordToGuess[i]) {
                     wordToGuess.splice([i], 1);
                 }
             }
-            lettersGuessed.push(answers.guess)
-            console.log(lettersGuessed)
-            console.log(`Correct! Keep guessing.`)
+            lettersGuessed.push(guess)
+            console.log(chalk.underline(`Correct!`))
             console.log('')
-            guessLetterPrompt(newWord)
+            guessSetup(newWord)
         } else {
-            console.log(`Sorry! Wrong letter. Keep guessing.`)
+            console.log(chalk.underline(`Sorry! Wrong letter. Keep guessing.`))
             console.log(chalk.italic(`Guesses Remaining: ${chalk.red(remainingGuesses)}`))
             console.log('')
             remainingGuesses--
-            guessLetterPrompt(newWord)
+            guessSetup(newWord)
         }
-
-        checkIfLost()
     })
 }
+
 function removeSpaces() {
     for (let i = 0; i < wordToGuess.length; i++) {
         if (wordToGuess[i] === ' ') {
@@ -97,19 +99,19 @@ function removeSpaces() {
 function alreadyGuessed(letter) {
     if (lettersGuessed.includes(letter)) {
         console.log(`You've already guessed that. Try another letter`)
-        guessLetterPrompt(newWord)
+        guessLetterPrompt()
     }
 }
 function checkIfWon() {
     if (wordToGuess.length === 0) {
         console.log('Congrats!')
-        playAgain()
+        return true
     }
 }
 function checkIfLost() {
-    if (remainingGuesses <= 0) {
+    if (remainingGuesses < 0) {
         console.log(`Sorry, Game over`)
-        playAgain()
+        return true
     }
 }
 function playAgain() {
@@ -122,7 +124,7 @@ function playAgain() {
         }
     ]).then(answers => {
         if (answers.playAgain) {
-            remainingGuesses = 10
+            remainingGuesses = 9
             selectTopicPrompt()
         } else {
             console.log('Goodbye')
