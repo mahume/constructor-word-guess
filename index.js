@@ -42,13 +42,13 @@ function pickRandomWord(arr) {
     const randomWord = arr[randomNum]
     newWord = new Word(randomWord)
     wordToGuess = newWord.wordToArr.map(letter => letter.toLowerCase())
+    removeSpaces()
     guessSetup(newWord)
 }
 function guessSetup(newWord) {
     console.log('')
     newWord.displayWord()
-    removeSpaces()
-    
+    console.log(wordToGuess)
     if (checkIfWon() || checkIfLost()) {
         playAgain()
         return
