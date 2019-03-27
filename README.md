@@ -15,10 +15,10 @@ node index.js
 
 3. Type in a letter and then press enter.
 
-*If you guessed correctly you will be notified and prompted to guess again.*
+*Correct Guess; you will be notified and prompted to guess again.*
 ![](gifs/correct.gif)
 
-*If you guessed incorrectly you will be notified, shown the number of remaining guesses, and then prompted to guess again.*
+*Incorrect guess; you will be notified with a display of remaining guesses, then prompted to guess again.*
 ![](gifs/incorrect.gif)
 
 
