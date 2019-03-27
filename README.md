@@ -11,12 +11,12 @@ node index.js
 
 2. Select a desired topic from which you will guess a word.
 
-![](/gifs/topic.gif)
+![](gifs/topic.gif)
 
 3. Type in a letter and then press enter.
 *If you guessed correctly you will be notified and prompted to guess again.*
 
-![](./gifs/correct.gif)
+![](gifs/correct.gif)
 
 *If you guessed incorrectly you will be notified, shown the number of remaining guesses, and then prompted to guess again.*
 
@@ -26,7 +26,7 @@ node index.js
 
 4. Upon a win or loss you will be prompted to continue or quit.
 
-![](win.gif)
+![](gifs/win.gif)
 
 ## Built With
 *   Node.js
