@@ -1,3 +1,5 @@
+"use strict"
+
 const Word = require('./word')
 
 const inquirer = require('inquirer')
