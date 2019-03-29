@@ -5,12 +5,11 @@ const Word = require('./word')
 const inquirer = require('inquirer')
 const chalk = require('chalk')
 
+// let newWord
 let remainingGuesses = 9
-let wordToGuess, newWord
+let wordToGuess
 let lettersGuessed = []
-const WORDS_COMPUTER_SCIENCE = ['Algorithm', 'Data Structures', 'Framework', 'Boolean', 'Closure', 'Array', 'Iteration']
-const WORDS_FOREIGN_LANGUAGES = ['Polish', 'Hungarian', 'Mandarin', 'Icelandic', 'Hebrew', 'Arabic']
-const WORDS_MOVIES = ['The Green Mile', 'Good Will Hunting', 'Shawshank Redemption', 'V for Vendetta', 'Casablanca', 'The Godfather']    
+
 
 selectTopicPrompt()
 function selectTopicPrompt() {
@@ -29,6 +28,10 @@ function selectTopicPrompt() {
     })
 }
 function chooseTopicArray(topic) {
+    const WORDS_COMPUTER_SCIENCE = ['Algorithm', 'Data Structures', 'Framework', 'Boolean', 'Closure', 'Array', 'Iteration']
+    const WORDS_FOREIGN_LANGUAGES = ['Polish', 'Hungarian', 'Mandarin', 'Icelandic', 'Hebrew', 'Arabic']
+    const WORDS_MOVIES = ['The Green Mile', 'Good Will Hunting', 'Shawshank Redemption', 'V for Vendetta', 'Casablanca', 'The Godfather']    
+
     switch (topic) {
         case 'Computer Science':
             pickRandomWord(WORDS_COMPUTER_SCIENCE)
@@ -46,7 +49,7 @@ function chooseTopicArray(topic) {
 function pickRandomWord(arr) {
     let randomNum = Math.floor(Math.random() * arr.length)
     let randomWord = arr[randomNum]
-    newWord = new Word(randomWord)
+    let newWord = new Word(randomWord)
     wordToGuess = newWord.wordToArr.map(letter => letter.toLowerCase())
     removeSpaces()
     guessSetup(newWord)
@@ -86,17 +89,12 @@ function guessLetterPrompt(newWord) {
 function alreadyGuessed(letter, newWord) {
     if (lettersGuessed.includes(letter)) {
         console.log(`You've already guessed that. Try another letter`)
-        guessSetup(newWord)
+        guessLetterPrompt(newWord)
     }
 }
 function afterGuess(letter, newWord) {
     if (wordToGuess.includes(letter)) {
-        for (let i = 0; i < wordToGuess.length; i++) {
-            if (wordToGuess[i] === letter) {
-                wordToGuess.splice([i], 1)
-            }
-        }
-        lettersGuessed.push(letter)
+        wordToGuess = wordToGuess.filter(el => el !== letter)
         console.log(chalk.underline(`Correct!`))
         console.log('')
         guessSetup(newWord)
