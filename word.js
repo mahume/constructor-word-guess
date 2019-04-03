@@ -1,26 +1,24 @@
-"use strict"
-
-const Letter = require('./letter')
+const Letter = require('./letter');
 
 const Word = function(word) {
-    this.wordToArr = word.split('')
-    this.newLetterArr = []
-    for (let i = 0; i < this.wordToArr.length; i++) {
-        const newChar = new Letter(this.wordToArr[i])
-        this.newLetterArr.push(newChar)
+  this.wordToArr = word.split('');
+  this.newLetterArr = [];
+  for (let i = 0; i < this.wordToArr.length; i++) {
+    const newChar = new Letter(this.wordToArr[i]);
+    this.newLetterArr.push(newChar);
+  }
+  this.checkLetter = function(guess) {
+    for (let i = 0; i < this.newLetterArr.length; i++) {
+      this.newLetterArr[i].checkGuess(guess);
     }
-    this.checkLetter = function(guess) {
-        for (let i = 0; i < this.newLetterArr.length; i++) {
-            this.newLetterArr[i].checkGuess(guess)
-        }
+  };
+  this.displayWord = function() {
+    const arrToStr = [];
+    for (let i = 0; i < this.newLetterArr.length; i++) {
+      arrToStr.push(this.newLetterArr[i].returnCharacter());
     }
-    this.displayWord = function() {
-        let arrToStr = []
-        for (let i = 0; i < this.newLetterArr.length; i++) {
-            arrToStr.push(this.newLetterArr[i].returnCharacter())
-        }
-        console.log(arrToStr.join(' '))
-    }
-}
+    console.log(arrToStr.join(' '));
+  };
+};
 
-module.exports = Word
+module.exports = Word;
