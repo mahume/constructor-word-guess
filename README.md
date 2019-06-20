@@ -1,9 +1,11 @@
-# Constructor Word Guess
+# Word Guess
 
 ## About
-CLI based Word Guess game.
+
+CLI based Word Guess game using JavaScript constructors.
 
 ## Getting Started
+
 1. Begin by typing the following code into the command line:
 ```
 node index.js
@@ -26,7 +28,8 @@ node index.js
 
 ![](gifs/win.gif)
 
-## Built With
+## Technologies
+
 *   Node.js
 *   npm packages
     * [inquirer](https://www.npmjs.com/package/inquirer)
@@ -34,4 +37,5 @@ node index.js
 
 
 ## Author
+
 [Mike Hume](https://mahume.github.io)
